@@ -3,9 +3,8 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.typescriptlang.org/">
-    <img alt="type-script" src="./screenshots/ts-logo-blue.jpg" width="250" title="type-script-logo"/>
-  </a>
+    <img alt="react-logo" src="https://www.vectorlogo.zone/logos/reactjs/reactjs-ar21.svg" width="300" title="react-logo"/>
+    <img alt="type-script-logo" src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-ar21.svg" width="300" title="type-script-logo"/>
 </p>
 
 
