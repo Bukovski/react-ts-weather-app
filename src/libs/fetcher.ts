@@ -1,4 +1,4 @@
-export default async function fetcher(url) {
+export default async function fetcher<T>(url: string): Promise<T> {
   const response = await fetch(url)
   
   if (!response.ok) {
@@ -6,12 +6,12 @@ export default async function fetcher(url) {
     throw error;
   }
   
-  const getJson = await response.json();
+  const getJson = await response.json() as Promise<T>;
 
   return getJson;
 }
 
-function handleError(errorCode) {
+function handleError(errorCode: string | number): Error {
   let error;
   
   switch (errorCode) {

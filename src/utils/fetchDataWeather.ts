@@ -5,11 +5,58 @@ import fetcher from "../libs/fetcher";
 import { messageError } from "../libs/clientMessages/clientMessages";
 
 
-const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY || "";
-const BASE_URL = "https://api.openweathermap.org/data/2.5/";
+interface IProps {
+	latitude?: number,
+	longitude?: number,
+	cityName?: string
+}
+
+interface IFetchCurrentWeather {
+	main: {
+		temp: number,
+		humidity: number,
+		pressure: number,
+	},
+	dt: number,
+	name: string,
+	wind: { speed: number },
+	weather: {
+		description: string,
+		id: number
+	}[]
+}
+
+interface IFetchWeatherForecast {
+	list: {
+		main: { temp: number }
+		dt: number
+	}[]
+}
+
+interface ICurrentWeather {
+	actualTemperature: string,
+	date: string,
+	cityName: string,
+	windSpeed: number,
+	humidity: string,
+	pressure: string,
+	weatherDescription: string,
+	weatherIcon: string,
+}
+
+interface IWeatherForecast {
+	temperaturesForecast: number[],
+	temperaturesForecastLabels: string[],
+	maxTemperature?: number,
+	minTemperature?: number,
+}
 
 
-const fetchDataWeather = ({ latitude, longitude, cityName }) => {
+const API_KEY: string = process.env.REACT_APP_OPENWEATHERMAP_API_KEY || "";
+const BASE_URL: string = "https://api.openweathermap.org/data/2.5/";
+
+
+const fetchDataWeather = ({ latitude, longitude, cityName }: IProps) => {
 	let geoCoordinates = `&lat=${ latitude }&lon=${ longitude }`;
 	
 	if (cityName) {
@@ -19,9 +66,9 @@ const fetchDataWeather = ({ latitude, longitude, cityName }) => {
 	const currentWeatherUrl = `${ BASE_URL }weather?appid=${ API_KEY }${ geoCoordinates }`;
 	const weatherForecastUrl = `${ BASE_URL }forecast?appid=${ API_KEY }${ geoCoordinates }`;
 	
-	const currentWeatherData = async () => {
+	const currentWeatherData = async (): Promise<ICurrentWeather | { error: boolean }> => {
 		try {
-			const getDataJson = await fetcher(currentWeatherUrl);
+			const getDataJson = await fetcher<IFetchCurrentWeather>(currentWeatherUrl);
 			
 			return  {
 				actualTemperature: kelvinToC(getDataJson.main.temp).toFixed(0),
@@ -39,9 +86,9 @@ const fetchDataWeather = ({ latitude, longitude, cityName }) => {
 		}
 	};
 	
-	const weatherForecastData = async () => {
+	const weatherForecastData = async (): Promise<IWeatherForecast | { error: boolean }> => {
 		try {
-			const getDataJson = await fetcher(weatherForecastUrl)
+			const getDataJson = await fetcher<IFetchWeatherForecast>(weatherForecastUrl)
 			
 			const temperaturesForecast = [];
 			const temperaturesForecastLabels = [];
