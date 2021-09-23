@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as  ReactDOM from 'react-dom';
 import 'vercel-toast/dist/vercel-toast.css';
 import './main.css';
 import { ThemeProvider } from "./hock-context/themeContext";

@@ -18,8 +18,8 @@ When you enter a city in the input field, you will have access to tips that you 
 ## Installation
 
 ```sh
-git clone git@github.com:Bukovski/react-weather-app.git
-cd react-weather-app
+git clone git@github.com:Bukovski/react-ts-weather-app.git
+cd react-ts-weather-app
 npm install
 npm run start
 ```
