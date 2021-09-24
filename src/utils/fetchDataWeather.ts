@@ -3,13 +3,8 @@ import { kelvinToC } from "./temperatureConvert";
 import { dateFromTimestamp, timeFromTimestamp } from "./timeConverter";
 import fetcher from "../libs/fetcher";
 import { messageError } from "../libs/clientMessages/clientMessages";
+import { ICurrentWeather, IFetchDataWeather, IWeatherForecast } from "../types";
 
-
-interface IProps {
-	latitude?: number,
-	longitude?: number,
-	cityName?: string
-}
 
 interface IFetchCurrentWeather {
 	main: {
@@ -33,30 +28,12 @@ interface IFetchWeatherForecast {
 	}[]
 }
 
-interface ICurrentWeather {
-	actualTemperature: string,
-	date: string,
-	cityName: string,
-	windSpeed: number,
-	humidity: string,
-	pressure: string,
-	weatherDescription: string,
-	weatherIcon: string,
-}
-
-interface IWeatherForecast {
-	temperaturesForecast: number[],
-	temperaturesForecastLabels: string[],
-	maxTemperature?: number,
-	minTemperature?: number,
-}
-
 
 const API_KEY: string = process.env.REACT_APP_OPENWEATHERMAP_API_KEY || "";
 const BASE_URL: string = "https://api.openweathermap.org/data/2.5/";
 
 
-const fetchDataWeather = ({ latitude, longitude, cityName }: IProps) => {
+const fetchDataWeather = ({ latitude, longitude, cityName }: IFetchDataWeather) => {
 	let geoCoordinates = `&lat=${ latitude }&lon=${ longitude }`;
 	
 	if (cityName) {

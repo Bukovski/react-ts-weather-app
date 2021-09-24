@@ -9,19 +9,32 @@ import Detail from "../components/detail.component";
 import Diagram from "../components/diagram.component";
 import ThemeSwitcher from "../components/themeSwitcher.component";
 import AutocompleteContainer from "./autocomplete.container";
+import {
+  IWeatherForecast,
+  ICurrentWeather,
+  TypeThemeColorNameList,
+  IFetchDataWeather
+} from "../types";
 
 
-class AppContainer extends React.Component {
-  constructor(props) {
+interface IState extends IWeatherForecast, ICurrentWeather {
+  loaded: boolean,
+  error: boolean,
+  theme: TypeThemeColorNameList
+}
+
+
+class AppContainer extends React.Component<{}, IState> {
+  constructor(props: {}) {
     super(props);
-    
+
     this.state = {
       actualTemperature: '0',
-      maxTemperature: '0',
-      minTemperature: '0',
+      maxTemperature: 0,
+      minTemperature: 0,
       date: 'Fri, May 6',
       cityName: 'City Name',
-      windSpeed: '0',
+      windSpeed: 0,
       humidity: '0',
       pressure: '0',
       weatherDescription: 'clouds',
@@ -45,7 +58,7 @@ class AppContainer extends React.Component {
     }, 1000)
   }
   
-  _setDataWeather = async (dataWeather) => {
+  _setDataWeather = async (dataWeather: IFetchDataWeather) => {
     const weatherData = await fetchDataWeather(dataWeather);
     
     if (!weatherData.error) {
@@ -61,7 +74,7 @@ class AppContainer extends React.Component {
   
   
   // Fetch the data using city name from input on page
-  handleLocationChange = async (inputText) => {
+  handleLocationChange = (inputText: string) => {
     this._setDataWeather({ cityName: inputText })
   };
   
