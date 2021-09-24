@@ -2,18 +2,20 @@ import { useContext } from "react";
 import { ThemeContext } from "../hock-context/themeContext";
 import themeColorList from "../utils/themeColorList.json";
 import useComponentVisible from "../hock-context/useComponentVisible";
+import { TypeThemeColorNameList } from "../types";
 
 
-const ThemeSwitcher = (props) => {
+
+const ThemeSwitcher = () => {
 	const { theme, setTheme } = useContext(ThemeContext);
 	const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 	
 	
 	const toggleThemeList = () => setIsComponentVisible(!isComponentVisible);
 	
-	const handleChangeTheme = (themeObj) => (event) => {
-		if (themeObj.theme !== theme) {
-			setTheme(themeObj.theme);
+	const handleChangeTheme = (themeName: string) => (event: React.MouseEvent<HTMLSpanElement>) => {
+		if (themeName !== theme) {
+			setTheme(themeName as TypeThemeColorNameList);
 		}
 		
 		toggleThemeList();
@@ -36,7 +38,7 @@ const ThemeSwitcher = (props) => {
 								border: `2px solid ${ theme.primary }`,
 								background: theme.bg
 							}}
-							onClick={ handleChangeTheme(theme) }
+							onClick={ handleChangeTheme(theme.theme) }
 						/>
 					</li>
 				}) }

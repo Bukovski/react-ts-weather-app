@@ -2,22 +2,30 @@ import { useContext, useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import themeColorList from "../utils/themeColorList.json";
 import { ThemeContext } from "../hock-context/themeContext";
+import { IDiagram } from "../types";
 
 
-const Diagram = (props) => {
+interface IDiagramProps {
+	data: IDiagram & {
+		loaded: boolean
+	}
+}
+
+
+const Diagram = (props: IDiagramProps) => {
 	const { temperaturesForecast, temperaturesForecastLabels, loaded } = props.data;
-	
+
 	const [ colorBg, setColorBg ] = useState("#fff");
 	const [ colorText, setColorText ] = useState("#495758");
 	const [ colorPrimary, setColorPrimary ] = useState("#1fa69d");
 	const { theme } = useContext(ThemeContext);
-	
-	
+
+
 	useEffect(() => {
 		try {
 			// get data theme from json
 			const findTheme = themeColorList.filter(themeColor => themeColor.theme === theme)[ 0 ];
-			
+
 			setColorBg(findTheme.bg);
 			setColorText(findTheme.text);
 			setColorPrimary(findTheme.primary);
@@ -31,19 +39,23 @@ const Diagram = (props) => {
 			setColorPrimary(getCssVarContainer.getPropertyValue('--color-primary'));
 		}
 	}, [ loaded, theme ]);
-	
-	
-	const diagramOptions = {
-		series: [{
-			name: 'Inflation',
-			data: [ ...temperaturesForecast ]
-		}],
-		options: {
+
+
+	const DiagramChart = () => <Chart
+		type="bar"
+		// height={ 280 }
+		series={
+			[{
+				name: 'Inflation',
+				data: [ ...temperaturesForecast ]
+			}]
+		}
+		options={{
 			chart: {
 				height: 350,
 				type: 'bar',
 			},
-			colors: colorPrimary,
+			colors: [ colorPrimary ],
 			plotOptions: {
 				bar: {
 					dataLabels: {
@@ -53,7 +65,7 @@ const Diagram = (props) => {
 			},
 			dataLabels: {
 				enabled: true,
-				formatter: function (val) {
+				formatter: function (val: number) {
 					return val + "°C";
 				},
 				offsetY: 10,
@@ -62,7 +74,7 @@ const Diagram = (props) => {
 					colors: [ colorBg ]
 				}
 			},
-			
+
 			xaxis: {
 				categories: [ ...temperaturesForecastLabels ],
 				position: 'bottom',
@@ -82,7 +94,7 @@ const Diagram = (props) => {
 					},
 				}
 			},
-			
+
 			yaxis: {
 				axisBorder: {
 					show: true
@@ -93,7 +105,7 @@ const Diagram = (props) => {
 				labels: {
 					show: true,
 					align: 'right',
-					formatter: function (val) {
+					formatter: function (val: number) {
 						return val + "°C";
 					},
 					style: {
@@ -102,16 +114,11 @@ const Diagram = (props) => {
 					},
 				}
 			},
-		},
-	}
-	
+		}}
+	/>
+
 	return (<div className="diagram">
-		<Chart
-			type="bar"
-			// height={ 280 }
-			options={ diagramOptions.options }
-			series={diagramOptions.series}
-		/>
+		<DiagramChart />
 	</div>);
 }
 

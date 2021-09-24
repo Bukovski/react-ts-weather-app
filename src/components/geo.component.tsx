@@ -1,7 +1,12 @@
 import React from "react";
+import { IGeo } from "../types";
 
 
-const Geo = (props) => {
+interface IGeoProps {
+	data: IGeo
+}
+
+const Geo = (props: IGeoProps) => {
 	const { cityName, date } = props.data;
 	
 	return (<div className="geo">

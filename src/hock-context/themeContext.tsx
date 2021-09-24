@@ -6,7 +6,7 @@ interface IThemeProviderProps {
   children: ReactNode
 }
 
-interface IThemeContext {
+export interface IThemeContext {
   theme: TypeThemeColorNameList,
   setTheme: (theme: TypeThemeColorNameList) => void
 }
@@ -30,8 +30,7 @@ const getInitialTheme = (): TypeThemeColorNameList => {
   return 'default';
 };
 
-
-export const ThemeContext = createContext<IThemeContext | null>(null);
+export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 export const ThemeProvider = ({ children }: IThemeProviderProps) => {
   const [ theme, setTheme ] = useState(getInitialTheme);

@@ -1,10 +1,17 @@
 import React from "react";
 import AnimatedNumber from "animated-number-react";
+import { IDetail } from "../types";
 
-const Detail = (props) => {
+
+interface IDetailProps {
+	data: IDetail
+}
+
+
+const Detail = (props: IDetailProps) => {
 	const { weatherDescription, weatherIcon, windSpeed, humidity, pressure } = props.data;
 	
-	const formatValue = (value) => value.toFixed(0);
+	const formatValue = (value: number) => value.toFixed(0);
 	
 	return (<div className="detail">
 		<div className="detail__wrap">
@@ -20,8 +27,8 @@ const Detail = (props) => {
 			<div className="detail__indicator">
 				<div className="detail__info">
 					<AnimatedNumber
-						value={ parseFloat(windSpeed) }
-						formatValue={ (value) => value.toFixed(2) }
+						value={ parseFloat(windSpeed.toString()) }
+						formatValue={ (value: number) => value.toFixed(2) }
 					/>
 					<span className="detail__measure">m/s</span>
 				</div>

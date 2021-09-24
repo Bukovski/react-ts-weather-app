@@ -26,7 +26,7 @@ const AutocompleteContainer = (props: { onLocationChange: (text: string) => void
 	const { onLocationChange = (text) => {} } = props;
 	
 	const isCancelled = useRef(false); // true - block update load data from autocomplete api
-	const [ textValue, setTextValue ] = useState<string>("stak"); // input data
+	const [ textValue, setTextValue ] = useState<string>(""); // input data
 	const [ cities, setCities ] = useState<ISuggestion[]>([]); // saved full collection from autocomplete api
 	const [ suggestions, setSuggestions ] = useState<ISuggestion[]>([]); // saved only filtered data
 	

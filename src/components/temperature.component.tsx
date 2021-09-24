@@ -1,11 +1,17 @@
 import React from "react";
 import AnimatedNumber from "animated-number-react";
+import { ITemperature } from "../types";
 
 
-const Temperature = (props) => {
+interface ITemperatureProps {
+	data: ITemperature & { actualTemperature : string }
+}
+
+
+const Temperature = (props: ITemperatureProps) => {
 	const { actualTemperature, maxTemperature, minTemperature } = props.data;
 	
-	const formatValue = (value) => value.toFixed(0);
+	const formatValue = (value: number) => value.toFixed(0);
 	
 	return (<div className="temperature">
 		<div className="temperature__deg">
@@ -22,7 +28,7 @@ const Temperature = (props) => {
 					<span className="temperature__mark">{ '\u2191' }</span>
 					<p className="temperature__text">
 						<AnimatedNumber
-							value={ parseInt(maxTemperature) }
+							value={ parseInt(maxTemperature as any as string) }
 							formatValue={ formatValue }
 						/>
 					</p>
@@ -32,7 +38,7 @@ const Temperature = (props) => {
 					<span className="temperature__mark">{ '\u2193' }</span>
 					<p className="temperature__text">
 						<AnimatedNumber
-							value={ parseInt(minTemperature) }
+							value={ parseInt(minTemperature as any as string) }
 							formatValue={ formatValue }
 						/>
 					</p>

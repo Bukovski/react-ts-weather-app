@@ -1,6 +1,17 @@
 import React from 'react';
 
-const Search = (props) => {
+
+interface ISearchProps {
+  children: React.ReactNode,
+  onChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  onClearField: () => void,
+  onKeyCatcher: (event: React.KeyboardEvent<HTMLInputElement>) => void,
+  onClickButton: () => void,
+  textValue: string
+}
+
+
+const Search = (props: ISearchProps) => {
   const {
     children,
     onChangeValue = () => {},
